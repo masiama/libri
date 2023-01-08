@@ -1,0 +1,16 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["import", "@typescript-eslint"],
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:vue/vue3-recommended",
+    "prettier"
+  ],
+  "ignorePatterns": ["android", "ios", "dist"],
+  "rules": {
+    "eqeqeq": ["error", "always"]
+  }
+}
