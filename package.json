@@ -16,6 +16,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
+    "@capacitor-community/barcode-scanner": "^3.0.1",
     "@capacitor/android": "^4.6.1",
     "@capacitor/core": "^4.6.1",
     "@capacitor/ios": "^4.6.1",
