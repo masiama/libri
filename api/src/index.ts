@@ -1,26 +1,21 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { Optional, Record, Static, String } from 'runtypes';
+import cors from 'cors';
 
 import prisma from './utils/prisma';
-
-export const BookRequest = Record({
-  title: String,
-  author: Optional(String),
-  thumbnail: Optional(String),
-});
-export type BookRequest = Static<typeof BookRequest>;
+import { BookRequest } from '../../src/types';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.API_PORT;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/books', async (req, res) => {
   try {
-    const books = await prisma.books.findMany();
+    const books = await prisma.books.findMany({ orderBy: [{ title: 'asc' }] });
     res.status(200).json(books);
   } catch (e) {
     return res.status(500).send('Internal Server Error');

@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "format:check": "prettier --check .",
-    "format:write": "prettier --write .",
+    "format:write": "prettier --write . && prisma format",
     "lint:check": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -16,6 +16,11 @@
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
-    "prettier-plugin-tailwindcss": "^0.3.0"
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "prisma": "^4.16.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.16.2",
+    "runtypes": "^6.7.0"
   }
 }
