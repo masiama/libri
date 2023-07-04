@@ -1,4 +1,9 @@
+import { useState } from 'react';
+import CheckBookModal from '../CheckBookModal';
+
 const Header = () => {
+  const [checkBookModalShow, setCheckBookModalShow] = useState(false);
+
   return (
     <header className="sticky top-0 z-50">
       <nav className="border-gray-200 bg-white bg-opacity-80 py-2.5 dark:bg-gray-800 dark:bg-opacity-80">
@@ -10,7 +15,10 @@ const Header = () => {
             Libri
           </a>
           <div className="flex items-center gap-2 lg:order-2">
-            <button className="rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5">
+            <button
+              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5"
+              onClick={() => setCheckBookModalShow(true)}
+            >
               Check book
             </button>
             <button className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 lg:px-5 lg:py-2.5">
@@ -19,6 +27,12 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      {checkBookModalShow && (
+        <CheckBookModal
+          show={checkBookModalShow}
+          hide={() => setCheckBookModalShow(false)}
+        />
+      )}
     </header>
   );
 };

@@ -6,3 +6,10 @@ export async function getBooks(): Promise<books[]> {
   const response = await fetch(`${API_ROOT}/books`);
   return response.json();
 }
+
+export async function getBook(
+  isbn: string,
+): Promise<{ data: books } | { error: string }> {
+  const response = await fetch(`${API_ROOT}/book/${isbn}`);
+  return response.json();
+}

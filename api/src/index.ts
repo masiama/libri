@@ -22,6 +22,16 @@ app.get('/books', async (req, res) => {
   }
 });
 
+app.get('/book/:isbn', async ({ params: { isbn } }, res) => {
+  try {
+    const book = await prisma.books.findFirst({ where: { isbn } });
+    if (book) res.status(200).json({ data: book });
+    else res.status(404).json({ error: 'Book is not found' });
+  } catch (e) {
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
 app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
   try {
     const data = BookRequest.check(body);
