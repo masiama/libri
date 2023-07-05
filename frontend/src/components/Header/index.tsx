@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CheckBookModal from '../CheckBookModal';
+import ModeToggle from '../ModeToggle';
 
 const Header = () => {
   const [checkBookModalShow, setCheckBookModalShow] = useState(false);
@@ -15,6 +16,7 @@ const Header = () => {
             Libri
           </a>
           <div className="flex items-center gap-2 lg:order-2">
+            <ModeToggle />
             <button
               className="rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-800 lg:px-5 lg:py-2.5"
               onClick={() => setCheckBookModalShow(true)}
