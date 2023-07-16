@@ -1,5 +1,7 @@
 import { books } from '@prisma/client';
 
+import { Type } from '../../../src/types';
+
 export const API_ROOT = import.meta.env.VITE_API_ROOT;
 
 export async function getBooks(): Promise<books[]> {
@@ -12,4 +14,26 @@ export async function getBook(
 ): Promise<{ data: books } | { error: string }> {
   const response = await fetch(`${API_ROOT}/book/${isbn}`);
   return response.json();
+}
+
+export async function saveBook(data: {
+  type: Type;
+  isbn: string;
+  title?: string;
+  author?: string;
+}): Promise<books | { error: string }> {
+  const { isbn, ...body } = data;
+  try {
+    const response = await fetch(`${API_ROOT}/book/${isbn}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    return response.json();
+  } catch (e) {
+    console.error(e);
+    return { error: 'Failed to add book' };
+  }
 }

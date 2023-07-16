@@ -10,7 +10,7 @@ const Grid = () => {
           <div className="h-[200px]">
             {book.thumbnail && (
               <img
-                className="mx-auto h-full rounded-lg"
+                className="mx-auto h-full rounded-lg object-contain"
                 src={book.thumbnail}
                 alt={book.title}
               />

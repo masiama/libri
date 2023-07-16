@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import CheckBookModal from '../CheckBookModal';
 import ModeToggle from '../ModeToggle';
+import CheckBookModal from '../CheckBookModal';
+import AddBookModal from '../AddBookModal';
 
 const Header = () => {
   const [checkBookModalShow, setCheckBookModalShow] = useState(false);
+  const [addBookModalShow, setAddBookModalShow] = useState(false);
 
   return (
     <header className="sticky top-0 z-50">
@@ -23,7 +25,10 @@ const Header = () => {
             >
               Check book
             </button>
-            <button className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 lg:px-5 lg:py-2.5">
+            <button
+              className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-4 lg:px-5 lg:py-2.5"
+              onClick={() => setAddBookModalShow(true)}
+            >
               Add book
             </button>
           </div>
@@ -33,6 +38,12 @@ const Header = () => {
         <CheckBookModal
           show={checkBookModalShow}
           hide={() => setCheckBookModalShow(false)}
+        />
+      )}
+      {addBookModalShow && (
+        <AddBookModal
+          show={addBookModalShow}
+          hide={() => setAddBookModalShow(false)}
         />
       )}
     </header>
