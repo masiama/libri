@@ -8,8 +8,16 @@ datasource db {
 }
 
 model books {
-  author    String?
-  isbn      String  @id
-  title     String
-  thumbnail String?
+  author     String?
+  isbn       String    @id
+  title      String
+  thumbnail  String?
+  locationId String
+  location   locations @relation(fields: [locationId], references: [id])
+}
+
+model locations {
+  id    String  @id @default(uuid())
+  title String
+  books books[]
 }

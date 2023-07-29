@@ -7,6 +7,7 @@ export type Type = Static<typeof Type>;
 export const BookRequest = Record({
   type: Type,
   title: String,
+  locationId: String,
   author: Optional(String),
   thumbnail: Optional(String),
 });

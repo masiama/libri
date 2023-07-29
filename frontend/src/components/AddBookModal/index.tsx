@@ -18,19 +18,20 @@ const AddBookModal = ({ show, hide }: Props) => {
   const errorTimer = useRef<number>();
   const webcam = useRef<Webcam>(null);
 
+  const locations = useStore(store => store.locations);
+  const addBook = useStore(store => store.addBook);
+
   const [isbn, setIsbn] = useState('');
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [error, setError] = useState<string>();
   const [type, setType] = useState<Type>('auto');
-
-  const addBook = useStore(store => store.addBook);
+  const [locationId, setLocationId] = useState(locations[0]?.id);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    const result = await saveBook({ type, isbn, title, author });
-    console.log(result);
+    const result = await saveBook({ type, isbn, title, author, locationId });
     if ('error' in result) {
       setError(result.error);
       errorTimer.current = window.setTimeout(() => setError(void 0), 5000);
@@ -194,6 +195,25 @@ const AddBookModal = ({ show, hide }: Props) => {
                   </div>
                 </>
               )}
+              <div>
+                <label
+                  htmlFor="title"
+                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Locations
+                </label>
+                <select
+                  value={locationId}
+                  onChange={e => setLocationId(e.target.value)}
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                >
+                  {locations.map(l => (
+                    <option key={l.id} value={l.id}>
+                      {l.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <button
                 type="submit"
                 className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"

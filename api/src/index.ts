@@ -37,6 +37,17 @@ app.get('/books', async (req, res) => {
   }
 });
 
+app.get('/locations', async (req, res) => {
+  try {
+    const locations = await prisma.locations.findMany({
+      orderBy: [{ title: 'asc' }],
+    });
+    res.status(200).json(locations);
+  } catch (e) {
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('/book/:isbn', async ({ params: { isbn } }, res) => {
   try {
     const book = await prisma.books.findFirst({ where: { isbn } });
@@ -51,13 +62,13 @@ app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
   try {
     const data = BookRequest.check(body);
 
-    const { type, ...info } = data;
+    const { type, locationId, ...info } = data;
 
     if (type === 'manual') {
       const book = await prisma.books.upsert({
         where: { isbn },
         update: { title: info.title },
-        create: { isbn, ...info },
+        create: { isbn, locationId, ...info },
       });
 
       return res.status(200).json(book);
@@ -75,6 +86,7 @@ app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
         title: rahvaraamat.name[0] + rahvaraamat.name.slice(1).toLowerCase(),
         author: rahvaraamat.authors.map((a: any) => a.name).join(', '),
         thumbnail: rahvaraamat.thumb_file_url,
+        locationId,
       };
     }
 
@@ -115,6 +127,7 @@ app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
               bookDocument
                 .querySelector('#product_mainimage')
                 ?.getAttribute('src') || null,
+            locationId,
           };
         }
       }
@@ -140,6 +153,7 @@ app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
               .querySelector('.product-block img')
               ?.getAttribute('src')
               ?.replace('small', 'large') || null,
+          locationId,
         };
       }
     }
@@ -156,6 +170,7 @@ app.post('/book/:isbn', async ({ body, params: { isbn } }, res) => {
           title: info.details.title,
           author: info.details.authors?.map(a => a.name).join(', ') || null,
           thumbnail: info.thumbnail_url?.replace('-S', '-M'),
+          locationId,
         };
       }
     }
